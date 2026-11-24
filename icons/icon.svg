@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Full-bleed square (iOS and maskable icons apply their own rounding).
+       The figure stays inside the central safe zone. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#3b82f6"/>
+      <stop offset="1" stop-color="#1e3a8a"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#bg)"/>
+
+  <!-- Ground shadow -->
+  <ellipse cx="222" cy="446" rx="62" ry="9" fill="#0b1a4a" opacity="0.35"/>
+
+  <!-- Disc -->
+  <g transform="rotate(-14 338 132)">
+    <ellipse cx="338" cy="132" rx="62" ry="21" fill="#ff8a3d"/>
+    <ellipse cx="338" cy="127" rx="44" ry="12" fill="none" stroke="#ffd2b0" stroke-width="5" opacity="0.8"/>
+  </g>
+
+  <!-- Jumping figure -->
+  <g fill="none" stroke="#ffffff" stroke-width="30" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M226 236 L204 320"/>                       <!-- torso -->
+    <path d="M224 248 L268 200 L300 156"/>              <!-- catching arm, reaching the disc -->
+    <path d="M220 256 L176 262 L156 226"/>              <!-- other arm -->
+    <path d="M204 320 L254 344 L236 392"/>              <!-- front leg, knee drive -->
+    <path d="M204 320 L170 362 L188 404"/>              <!-- back leg -->
+  </g>
+  <circle cx="240" cy="198" r="28" fill="#ffffff"/>    <!-- head -->
+</svg>

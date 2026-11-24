@@ -1,0 +1,9 @@
+{
+  "name": "athletik-plan",
+  "private": true,
+  "type": "module",
+  "description": "Offline-first PWA for a personal jump training plan. No dependencies; package.json only marks .js files as ES modules for `node --test`.",
+  "scripts": {
+    "test": "node --test"
+  }
+}

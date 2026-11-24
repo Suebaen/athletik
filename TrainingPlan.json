@@ -1,0 +1,314 @@
+{
+  "schemaVersion": 1,
+  "id": "luftkampf-2026-27",
+  "title": "Athletik-Plan Ultimate – Luftkämpfe",
+  "createdAt": "2026-11-24",
+  "goal": {
+    "testId": "cmj",
+    "target": 75,
+    "unit": "cm",
+    "description": "Luftkämpfe gewinnen: mehr Sprunghöhe, besseres Timing, mehr Körperkontrolle"
+  },
+  "deload": {
+    "setsFactor": 0.5,
+    "description": "Gleiche Übungen und Gewichte, aber nur etwa halb so viele Sätze."
+  },
+  "testDates": ["2026-11-30", "2026-12-18", "2027-01-29", "2027-03-19", "2027-04-16"],
+  "tests": [
+    {
+      "id": "cmj",
+      "name": "Sprung aus dem Stand (CMJ)",
+      "unit": "cm",
+      "attempts": 3,
+      "instructions": "Mit der Sprung-App messen. Ausgeruht, immer gleiches Aufwärmen, der beste von 3 Versuchen zählt."
+    },
+    {
+      "id": "approach-reach",
+      "name": "Anlauf-Reichhöhe",
+      "unit": "cm",
+      "attempts": 3,
+      "instructions": "Höchster Punkt, den du mit Anlauf an einer Wand oder am Korb berührst. Immer gleicher Anlauf."
+    },
+    {
+      "id": "broad-jump",
+      "name": "Standweitsprung",
+      "unit": "cm",
+      "attempts": 3,
+      "instructions": "Beidbeinig aus dem Stand, Landung halten. Gemessen bis zur Ferse."
+    }
+  ],
+  "rules": [
+    "Sprünge immer zuerst, direkt nach dem Aufwärmen. Werden die Sprünge merklich schlechter, Satz beenden.",
+    "Etwa 40–80 Bodenkontakte pro Sprungeinheit. Je intensiver die Sprünge, desto weniger.",
+    "Auf weichem Untergrund springen (Hallenboden, Rasen), nicht auf Beton.",
+    "Zieht die Patella- oder Achillessehne: Sprungvolumen halbieren. Wird es nicht besser, zum Physio.",
+    "Schlaf ist das wichtigste Mittel zur Regeneration, besonders in Phase 2 und 3."
+  ],
+  "phases": [
+    {
+      "id": "p1",
+      "order": 1,
+      "name": "Grundlage",
+      "focus": "Muskeln, Sehnen und Sprungtechnik vorbereiten. 2 Wiederholungen Reserve lassen.",
+      "startDate": "2026-11-30",
+      "weeks": 6,
+      "deloadWeeks": [4],
+      "schedule": [
+        { "weekday": 1, "type": "gym", "sessionId": "p1-a", "note": null },
+        { "weekday": 2, "type": "gym", "sessionId": "p1-b", "note": null },
+        { "weekday": 3, "type": "ultimate", "sessionId": "p1-u", "note": "Ultimate-Training + 15 min Luftkampf-Drills" },
+        { "weekday": 4, "type": "rest", "sessionId": null, "note": "Locker bewegen, Mobility" },
+        { "weekday": 5, "type": "gym", "sessionId": "p1-c", "note": null },
+        { "weekday": 6, "type": "optional", "sessionId": null, "note": "Werfen oder lockerer Lauf, keine Sprünge" },
+        { "weekday": 7, "type": "rest", "sessionId": null, "note": null }
+      ],
+      "sessions": [
+        {
+          "id": "p1-a",
+          "name": "Gym A – Kraft Beine + Sprünge",
+          "focus": "Beinkraft und saubere Landungen",
+          "exercises": [
+            { "id": "drop-stick", "name": "Drop & Stick", "category": "jump", "sets": 3, "repsMin": 5, "repsMax": 5, "durationSeconds": null, "perSide": false, "restSeconds": 60, "trackWeight": false, "groupId": null, "notes": "Von der Box fallen lassen, Landung halten. Leise landen, Knie über den Zehen." },
+            { "id": "box-jump", "name": "Box Jumps", "category": "jump", "sets": 4, "repsMin": 3, "repsMax": 3, "durationSeconds": null, "perSide": false, "restSeconds": 90, "trackWeight": false, "groupId": null, "notes": "Maximal hoch, danach runtersteigen statt springen." },
+            { "id": "back-squat", "name": "Kniebeuge", "category": "strength", "sets": 4, "repsMin": 6, "repsMax": 8, "durationSeconds": null, "perSide": false, "restSeconds": 120, "trackWeight": true, "groupId": null, "notes": "Volle Tiefe, sauber." },
+            { "id": "romanian-deadlift", "name": "Rumänisches Kreuzheben", "category": "strength", "sets": 3, "repsMin": 8, "repsMax": 8, "durationSeconds": null, "perSide": false, "restSeconds": 120, "trackWeight": true, "groupId": null, "notes": "Hüfte nach hinten, Rücken gerade." },
+            { "id": "bulgarian-split-squat", "name": "Bulgarian Split Squat", "category": "strength", "sets": 3, "repsMin": 8, "repsMax": 8, "durationSeconds": null, "perSide": true, "restSeconds": 90, "trackWeight": true, "groupId": null, "notes": "Kraft fürs Absprungbein." },
+            { "id": "calf-raise", "name": "Wadenheben, Beine gestreckt", "category": "strength", "sets": 3, "repsMin": 12, "repsMax": 12, "durationSeconds": null, "perSide": false, "restSeconds": 60, "trackWeight": true, "groupId": null, "notes": "Langsam runter, oben 1 s halten." },
+            { "id": "tibialis-raise", "name": "Tibialis Raises", "category": "prevention", "sets": 2, "repsMin": 15, "repsMax": 15, "durationSeconds": null, "perSide": false, "restSeconds": 45, "trackWeight": false, "groupId": null, "notes": "Schienbein, schützt bei Landungen." }
+          ]
+        },
+        {
+          "id": "p1-b",
+          "name": "Gym B – Oberkörper, Rumpf, Prävention",
+          "focus": "Stabilität in der Luft und Verletzungsprävention",
+          "exercises": [
+            { "id": "pull-up", "name": "Klimmzüge", "category": "strength", "sets": 4, "repsMin": 6, "repsMax": 8, "durationSeconds": null, "perSide": false, "restSeconds": 90, "trackWeight": true, "groupId": null, "notes": null },
+            { "id": "incline-db-press", "name": "Kurzhantel-Schrägbankdrücken", "category": "strength", "sets": 3, "repsMin": 8, "repsMax": 8, "durationSeconds": null, "perSide": false, "restSeconds": 90, "trackWeight": true, "groupId": null, "notes": null },
+            { "id": "one-arm-row", "name": "Einarmiges Rudern", "category": "strength", "sets": 3, "repsMin": 10, "repsMax": 10, "durationSeconds": null, "perSide": true, "restSeconds": 60, "trackWeight": true, "groupId": null, "notes": null },
+            { "id": "landmine-press", "name": "Landmine Press oder Schulterdrücken im Stehen", "category": "strength", "sets": 3, "repsMin": 8, "repsMax": 8, "durationSeconds": null, "perSide": false, "restSeconds": 90, "trackWeight": true, "groupId": null, "notes": "Rumpf fest." },
+            { "id": "pallof-press", "name": "Pallof Press", "category": "core", "sets": 3, "repsMin": 10, "repsMax": 10, "durationSeconds": null, "perSide": true, "restSeconds": 45, "trackWeight": false, "groupId": null, "notes": "Anti-Rotation: hält dich bei Kontakt in der Luft stabil." },
+            { "id": "nordic-curl", "name": "Nordic Hamstring Curls", "category": "prevention", "sets": 3, "repsMin": 4, "repsMax": 6, "durationSeconds": null, "perSide": false, "restSeconds": 90, "trackWeight": false, "groupId": null, "notes": "Beste Übung gegen Zerrungen." },
+            { "id": "copenhagen-plank", "name": "Copenhagen Plank", "category": "prevention", "sets": 3, "repsMin": null, "repsMax": null, "durationSeconds": 20, "perSide": true, "restSeconds": 45, "trackWeight": false, "groupId": null, "notes": "Adduktoren, für Cuts und Landungen." }
+          ]
+        },
+        {
+          "id": "p1-u",
+          "name": "Luftkampf-Drills",
+          "focus": "Timing, Absprung und Fangen am höchsten Punkt",
+          "exercises": [
+            { "id": "timing-drill", "name": "Timing-Drill", "category": "skill", "sets": 1, "repsMin": 10, "repsMax": 15, "durationSeconds": null, "perSide": false, "restSeconds": 30, "trackWeight": false, "groupId": null, "notes": "Partner wirft hohe, hängende Scheiben. Spät starten, am höchsten Punkt fangen. Lieber einen Tick zu spät als zu früh springen." },
+            { "id": "takeoff-variation", "name": "Absprung variieren", "category": "skill", "sets": 2, "repsMin": 5, "repsMax": 5, "durationSeconds": null, "perSide": false, "restSeconds": 30, "trackWeight": false, "groupId": null, "notes": "Ein Satz einbeinig aus dem Lauf, ein Satz beidbeinig aus dem Stand." },
+            { "id": "highpoint-catch", "name": "Fangen am höchsten Punkt", "category": "skill", "sets": 1, "repsMin": 10, "repsMax": 10, "durationSeconds": null, "perSide": false, "restSeconds": 30, "trackWeight": false, "groupId": null, "notes": "Arm ganz strecken, Augen bis in die Hand, am Rand greifen statt Pancake." },
+            { "id": "two-vs-disc", "name": "2 gegen 1 Scheibe", "category": "skill", "sets": 1, "repsMin": 8, "repsMax": 10, "durationSeconds": null, "perSide": false, "restSeconds": 45, "trackWeight": false, "groupId": null, "notes": "Zwei Spieler auf eine hohe Scheibe. Position zwischen Gegner und Landepunkt erarbeiten, ohne in einen laufenden Gegner zu gehen." }
+          ]
+        },
+        {
+          "id": "p1-c",
+          "name": "Gym C – Schnellkraft, einbeinig",
+          "focus": "Reaktive Kraft und Absprungbein",
+          "exercises": [
+            { "id": "pogo-hop", "name": "Pogo Hops", "category": "jump", "sets": 3, "repsMin": 15, "repsMax": 15, "durationSeconds": null, "perSide": false, "restSeconds": 60, "trackWeight": false, "groupId": null, "notes": "Kurze Bodenkontakte, Fußgelenk steif." },
+            { "id": "broad-jump", "name": "Standweitsprung", "category": "jump", "sets": 4, "repsMin": 3, "repsMax": 3, "durationSeconds": null, "perSide": false, "restSeconds": 90, "trackWeight": false, "groupId": null, "notes": "Landung halten." },
+            { "id": "single-leg-box-jump", "name": "Einbeinige Box Jumps", "category": "jump", "sets": 3, "repsMin": 3, "repsMax": 3, "durationSeconds": null, "perSide": true, "restSeconds": 90, "trackWeight": false, "groupId": null, "notes": "Niedrige Box, saubere Landung." },
+            { "id": "trap-bar-deadlift", "name": "Trap Bar Deadlift (oder Hip Thrust)", "category": "strength", "sets": 4, "repsMin": 6, "repsMax": 6, "durationSeconds": null, "perSide": false, "restSeconds": 120, "trackWeight": true, "groupId": null, "notes": "Explosiv hochdrücken." },
+            { "id": "step-up", "name": "Step-Ups auf eine hohe Box", "category": "strength", "sets": 3, "repsMin": 6, "repsMax": 6, "durationSeconds": null, "perSide": true, "restSeconds": 90, "trackWeight": true, "groupId": null, "notes": "Schwungknie hochziehen wie beim Absprung." },
+            { "id": "single-leg-calf-raise", "name": "Einbeiniges Wadenheben", "category": "strength", "sets": 3, "repsMin": 10, "repsMax": 10, "durationSeconds": null, "perSide": true, "restSeconds": 45, "trackWeight": true, "groupId": null, "notes": null },
+            { "id": "dead-bug", "name": "Dead Bug", "category": "core", "sets": 3, "repsMin": 8, "repsMax": 8, "durationSeconds": null, "perSide": true, "restSeconds": 45, "trackWeight": false, "groupId": null, "notes": null }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p2",
+      "order": 2,
+      "name": "Maximalkraft",
+      "focus": "Kraftbasis für den Absprung. Schwer, aber 1–2 Wiederholungen Reserve lassen.",
+      "startDate": "2027-01-11",
+      "weeks": 7,
+      "deloadWeeks": [4],
+      "schedule": [
+        { "weekday": 1, "type": "gym", "sessionId": "p2-a", "note": null },
+        { "weekday": 2, "type": "gym", "sessionId": "p2-b", "note": null },
+        { "weekday": 3, "type": "ultimate", "sessionId": "p2-u", "note": "Ultimate-Training + 15 min Luftkampf-Drills" },
+        { "weekday": 4, "type": "rest", "sessionId": null, "note": "Locker bewegen, Mobility" },
+        { "weekday": 5, "type": "gym", "sessionId": "p2-c", "note": null },
+        { "weekday": 6, "type": "optional", "sessionId": null, "note": "Werfen oder lockerer Lauf, keine Sprünge" },
+        { "weekday": 7, "type": "rest", "sessionId": null, "note": null }
+      ],
+      "sessions": [
+        {
+          "id": "p2-a",
+          "name": "Gym A – Maximalkraft Beine + Sprünge",
+          "focus": "Schwere Kniebeugen, höhere Sprünge",
+          "exercises": [
+            { "id": "box-jump", "name": "Box Jumps (höhere Box)", "category": "jump", "sets": 4, "repsMin": 3, "repsMax": 3, "durationSeconds": null, "perSide": false, "restSeconds": 90, "trackWeight": false, "groupId": null, "notes": "Maximal hoch, runtersteigen." },
+            { "id": "hurdle-hop", "name": "Hürdensprünge", "category": "jump", "sets": 4, "repsMin": 4, "repsMax": 4, "durationSeconds": null, "perSide": false, "restSeconds": 90, "trackWeight": false, "groupId": null, "notes": "Kurze Bodenkontakte zwischen den Hürden." },
+            { "id": "back-squat", "name": "Kniebeuge", "category": "strength", "sets": 5, "repsMin": 3, "repsMax": 5, "durationSeconds": null, "perSide": false, "restSeconds": 180, "trackWeight": true, "groupId": null, "notes": "Schwer, 1–2 Wiederholungen Reserve." },
+            { "id": "romanian-deadlift", "name": "Rumänisches Kreuzheben", "category": "strength", "sets": 3, "repsMin": 6, "repsMax": 6, "durationSeconds": null, "perSide": false, "restSeconds": 150, "trackWeight": true, "groupId": null, "notes": null },
+            { "id": "bulgarian-split-squat", "name": "Bulgarian Split Squat", "category": "strength", "sets": 3, "repsMin": 6, "repsMax": 6, "durationSeconds": null, "perSide": true, "restSeconds": 120, "trackWeight": true, "groupId": null, "notes": "Schwerer als in Phase 1." },
+            { "id": "calf-raise", "name": "Wadenheben, Beine gestreckt", "category": "strength", "sets": 3, "repsMin": 10, "repsMax": 10, "durationSeconds": null, "perSide": false, "restSeconds": 60, "trackWeight": true, "groupId": null, "notes": null },
+            { "id": "tibialis-raise", "name": "Tibialis Raises", "category": "prevention", "sets": 2, "repsMin": 15, "repsMax": 15, "durationSeconds": null, "perSide": false, "restSeconds": 45, "trackWeight": false, "groupId": null, "notes": null }
+          ]
+        },
+        {
+          "id": "p2-b",
+          "name": "Gym B – Oberkörper, Rumpf, Prävention",
+          "focus": "Stabilität in der Luft und Verletzungsprävention",
+          "exercises": [
+            { "id": "pull-up", "name": "Klimmzüge (gern mit Zusatzgewicht)", "category": "strength", "sets": 4, "repsMin": 5, "repsMax": 6, "durationSeconds": null, "perSide": false, "restSeconds": 120, "trackWeight": true, "groupId": null, "notes": null },
+            { "id": "incline-db-press", "name": "Kurzhantel-Schrägbankdrücken", "category": "strength", "sets": 3, "repsMin": 6, "repsMax": 8, "durationSeconds": null, "perSide": false, "restSeconds": 120, "trackWeight": true, "groupId": null, "notes": null },
+            { "id": "one-arm-row", "name": "Einarmiges Rudern", "category": "strength", "sets": 3, "repsMin": 8, "repsMax": 8, "durationSeconds": null, "perSide": true, "restSeconds": 60, "trackWeight": true, "groupId": null, "notes": null },
+            { "id": "landmine-press", "name": "Landmine Press oder Schulterdrücken im Stehen", "category": "strength", "sets": 3, "repsMin": 6, "repsMax": 6, "durationSeconds": null, "perSide": false, "restSeconds": 120, "trackWeight": true, "groupId": null, "notes": "Rumpf fest." },
+            { "id": "pallof-press", "name": "Pallof Press", "category": "core", "sets": 3, "repsMin": 10, "repsMax": 10, "durationSeconds": null, "perSide": true, "restSeconds": 45, "trackWeight": false, "groupId": null, "notes": null },
+            { "id": "nordic-curl", "name": "Nordic Hamstring Curls", "category": "prevention", "sets": 3, "repsMin": 5, "repsMax": 6, "durationSeconds": null, "perSide": false, "restSeconds": 90, "trackWeight": false, "groupId": null, "notes": null },
+            { "id": "copenhagen-plank", "name": "Copenhagen Plank", "category": "prevention", "sets": 3, "repsMin": null, "repsMax": null, "durationSeconds": 25, "perSide": true, "restSeconds": 45, "trackWeight": false, "groupId": null, "notes": null }
+          ]
+        },
+        {
+          "id": "p2-u",
+          "name": "Luftkampf-Drills",
+          "focus": "Timing, Absprung und Fangen am höchsten Punkt",
+          "exercises": [
+            { "id": "timing-drill", "name": "Timing-Drill", "category": "skill", "sets": 1, "repsMin": 10, "repsMax": 15, "durationSeconds": null, "perSide": false, "restSeconds": 30, "trackWeight": false, "groupId": null, "notes": "Spät starten, am höchsten Punkt fangen." },
+            { "id": "takeoff-variation", "name": "Absprung variieren", "category": "skill", "sets": 2, "repsMin": 5, "repsMax": 5, "durationSeconds": null, "perSide": false, "restSeconds": 30, "trackWeight": false, "groupId": null, "notes": "Einbeinig aus dem Lauf und beidbeinig aus dem Stand." },
+            { "id": "two-vs-disc", "name": "2 gegen 1 Scheibe", "category": "skill", "sets": 1, "repsMin": 8, "repsMax": 10, "durationSeconds": null, "perSide": false, "restSeconds": 45, "trackWeight": false, "groupId": null, "notes": "Unter echtem Druck: Position, Timing, Fangen." }
+          ]
+        },
+        {
+          "id": "p2-c",
+          "name": "Gym C – Kraft + Anlaufsprünge",
+          "focus": "Schweres Ziehen, Sprunglauf, erste Anlaufsprünge",
+          "exercises": [
+            { "id": "pogo-hop", "name": "Pogo Hops", "category": "jump", "sets": 3, "repsMin": 20, "repsMax": 20, "durationSeconds": null, "perSide": false, "restSeconds": 60, "trackWeight": false, "groupId": null, "notes": null },
+            { "id": "bounds", "name": "Sprunglauf (Bounds)", "category": "jump", "sets": 3, "repsMin": 4, "repsMax": 4, "durationSeconds": null, "perSide": true, "restSeconds": 90, "trackWeight": false, "groupId": null, "notes": "Weite, kraftvolle Schritte." },
+            { "id": "approach-jump", "name": "Anlaufsprünge (3 Schritte)", "category": "jump", "sets": 4, "repsMin": 3, "repsMax": 3, "durationSeconds": null, "perSide": false, "restSeconds": 90, "trackWeight": false, "groupId": null, "notes": "Maximal hoch, Ziel an Wand oder Korb." },
+            { "id": "trap-bar-deadlift", "name": "Trap Bar Deadlift", "category": "strength", "sets": 4, "repsMin": 4, "repsMax": 4, "durationSeconds": null, "perSide": false, "restSeconds": 180, "trackWeight": true, "groupId": null, "notes": "Schwer, explosiv hoch." },
+            { "id": "step-up", "name": "Step-Ups auf eine hohe Box", "category": "strength", "sets": 3, "repsMin": 5, "repsMax": 5, "durationSeconds": null, "perSide": true, "restSeconds": 120, "trackWeight": true, "groupId": null, "notes": null },
+            { "id": "single-leg-calf-raise", "name": "Einbeiniges Wadenheben", "category": "strength", "sets": 3, "repsMin": 10, "repsMax": 10, "durationSeconds": null, "perSide": true, "restSeconds": 45, "trackWeight": true, "groupId": null, "notes": null },
+            { "id": "dead-bug", "name": "Dead Bug", "category": "core", "sets": 3, "repsMin": 8, "repsMax": 8, "durationSeconds": null, "perSide": true, "restSeconds": 45, "trackWeight": false, "groupId": null, "notes": null }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p3",
+      "order": 3,
+      "name": "Schnellkraft",
+      "focus": "Kraft in Sprunghöhe umwandeln. Wenig Volumen, jeder Sprung mit 100 %.",
+      "startDate": "2027-03-01",
+      "weeks": 8,
+      "deloadWeeks": [4, 8],
+      "schedule": [
+        { "weekday": 1, "type": "gym", "sessionId": "p3-a", "note": null },
+        { "weekday": 2, "type": "gym", "sessionId": "p3-b", "note": null },
+        { "weekday": 3, "type": "ultimate", "sessionId": "p3-u", "note": "Ultimate-Training + 15 min Luftkampf-Drills" },
+        { "weekday": 4, "type": "rest", "sessionId": null, "note": "Locker bewegen, Mobility" },
+        { "weekday": 5, "type": "gym", "sessionId": "p3-c", "note": null },
+        { "weekday": 6, "type": "optional", "sessionId": null, "note": "Werfen oder lockerer Lauf, keine Sprünge" },
+        { "weekday": 7, "type": "rest", "sessionId": null, "note": null }
+      ],
+      "sessions": [
+        {
+          "id": "p3-a",
+          "name": "Gym A – Kontrast + Depth Jumps",
+          "focus": "Schwerer Satz direkt vor maximalen Sprüngen",
+          "exercises": [
+            { "id": "back-squat", "name": "Kniebeuge (Kontrastpaar)", "category": "strength", "sets": 3, "repsMin": 3, "repsMax": 3, "durationSeconds": null, "perSide": false, "restSeconds": 60, "trackWeight": true, "groupId": "k1", "notes": "Schwer. Nach 1 min Pause direkt die Box Jumps." },
+            { "id": "box-jump", "name": "Box Jumps (Kontrastpaar)", "category": "jump", "sets": 3, "repsMin": 3, "repsMax": 3, "durationSeconds": null, "perSide": false, "restSeconds": 150, "trackWeight": false, "groupId": "k1", "notes": "Maximal hoch. Danach volle Pause bis zum nächsten Paar." },
+            { "id": "depth-jump", "name": "Depth Jumps (30–40 cm)", "category": "jump", "sets": 4, "repsMin": 3, "repsMax": 3, "durationSeconds": null, "perSide": false, "restSeconds": 120, "trackWeight": false, "groupId": null, "notes": "Fallen lassen, kurzer Bodenkontakt, sofort maximal hoch." },
+            { "id": "jump-squat", "name": "Sprungkniebeugen (leicht)", "category": "jump", "sets": 4, "repsMin": 4, "repsMax": 4, "durationSeconds": null, "perSide": false, "restSeconds": 120, "trackWeight": true, "groupId": null, "notes": "Ca. 20–30 % deines Kniebeugen-Maximums, maximal explosiv." },
+            { "id": "romanian-deadlift", "name": "Rumänisches Kreuzheben", "category": "strength", "sets": 3, "repsMin": 5, "repsMax": 5, "durationSeconds": null, "perSide": false, "restSeconds": 150, "trackWeight": true, "groupId": null, "notes": null },
+            { "id": "calf-raise", "name": "Wadenheben, Beine gestreckt", "category": "strength", "sets": 3, "repsMin": 10, "repsMax": 10, "durationSeconds": null, "perSide": false, "restSeconds": 60, "trackWeight": true, "groupId": null, "notes": null }
+          ]
+        },
+        {
+          "id": "p3-b",
+          "name": "Gym B – Oberkörper, Rumpf, Prävention",
+          "focus": "Erhalt und Verletzungsprävention",
+          "exercises": [
+            { "id": "pull-up", "name": "Klimmzüge", "category": "strength", "sets": 3, "repsMin": 5, "repsMax": 5, "durationSeconds": null, "perSide": false, "restSeconds": 120, "trackWeight": true, "groupId": null, "notes": null },
+            { "id": "incline-db-press", "name": "Kurzhantel-Schrägbankdrücken", "category": "strength", "sets": 3, "repsMin": 6, "repsMax": 6, "durationSeconds": null, "perSide": false, "restSeconds": 120, "trackWeight": true, "groupId": null, "notes": null },
+            { "id": "one-arm-row", "name": "Einarmiges Rudern", "category": "strength", "sets": 3, "repsMin": 8, "repsMax": 8, "durationSeconds": null, "perSide": true, "restSeconds": 60, "trackWeight": true, "groupId": null, "notes": null },
+            { "id": "pallof-press", "name": "Pallof Press", "category": "core", "sets": 3, "repsMin": 10, "repsMax": 10, "durationSeconds": null, "perSide": true, "restSeconds": 45, "trackWeight": false, "groupId": null, "notes": null },
+            { "id": "nordic-curl", "name": "Nordic Hamstring Curls", "category": "prevention", "sets": 3, "repsMin": 5, "repsMax": 5, "durationSeconds": null, "perSide": false, "restSeconds": 90, "trackWeight": false, "groupId": null, "notes": null },
+            { "id": "copenhagen-plank", "name": "Copenhagen Plank", "category": "prevention", "sets": 3, "repsMin": null, "repsMax": null, "durationSeconds": 25, "perSide": true, "restSeconds": 45, "trackWeight": false, "groupId": null, "notes": null }
+          ]
+        },
+        {
+          "id": "p3-u",
+          "name": "Luftkampf-Drills",
+          "focus": "Timing und Luftkampf unter Druck",
+          "exercises": [
+            { "id": "timing-drill", "name": "Timing-Drill", "category": "skill", "sets": 1, "repsMin": 10, "repsMax": 15, "durationSeconds": null, "perSide": false, "restSeconds": 30, "trackWeight": false, "groupId": null, "notes": "Spät starten, am höchsten Punkt fangen." },
+            { "id": "two-vs-disc", "name": "2 gegen 1 Scheibe", "category": "skill", "sets": 2, "repsMin": 6, "repsMax": 8, "durationSeconds": null, "perSide": false, "restSeconds": 45, "trackWeight": false, "groupId": null, "notes": "Volle Intensität, wie im Spiel." }
+          ]
+        },
+        {
+          "id": "p3-c",
+          "name": "Gym C – Kontrast + Anlaufsprünge",
+          "focus": "Schweres Ziehen vor Sprüngen, Anlaufsprünge mit Ziel",
+          "exercises": [
+            { "id": "trap-bar-deadlift", "name": "Trap Bar Deadlift (Kontrastpaar)", "category": "strength", "sets": 3, "repsMin": 3, "repsMax": 3, "durationSeconds": null, "perSide": false, "restSeconds": 60, "trackWeight": true, "groupId": "k2", "notes": "Schwer. Nach 1 min Pause direkt die Weitsprünge." },
+            { "id": "broad-jump", "name": "Standweitsprung (Kontrastpaar)", "category": "jump", "sets": 3, "repsMin": 3, "repsMax": 3, "durationSeconds": null, "perSide": false, "restSeconds": 150, "trackWeight": false, "groupId": "k2", "notes": "Maximal weit, Landung halten." },
+            { "id": "approach-jump", "name": "Anlaufsprünge mit Ziel", "category": "jump", "sets": 5, "repsMin": 3, "repsMax": 3, "durationSeconds": null, "perSide": false, "restSeconds": 90, "trackWeight": false, "groupId": null, "notes": "Abwechselnd ein- und beidbeinig, Markierung an der Wand oder Korbring." },
+            { "id": "single-leg-box-jump", "name": "Einbeinige Box Jumps", "category": "jump", "sets": 3, "repsMin": 3, "repsMax": 3, "durationSeconds": null, "perSide": true, "restSeconds": 90, "trackWeight": false, "groupId": null, "notes": null },
+            { "id": "step-up", "name": "Step-Ups, explosiv", "category": "strength", "sets": 3, "repsMin": 4, "repsMax": 4, "durationSeconds": null, "perSide": true, "restSeconds": 120, "trackWeight": true, "groupId": null, "notes": "Leichter als in Phase 2, dafür schnell." },
+            { "id": "dead-bug", "name": "Dead Bug", "category": "core", "sets": 3, "repsMin": 8, "repsMax": 8, "durationSeconds": null, "perSide": true, "restSeconds": 45, "trackWeight": false, "groupId": null, "notes": null }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "p4",
+      "order": 4,
+      "name": "Saison",
+      "focus": "Niveau halten, frisch für Turniere. Letzte schwere Einheit spätestens 3–4 Tage vor einem Turnier.",
+      "startDate": "2027-04-26",
+      "weeks": null,
+      "deloadWeeks": [],
+      "schedule": [
+        { "weekday": 1, "type": "gym", "sessionId": "p4-a", "note": null },
+        { "weekday": 2, "type": "ultimate", "sessionId": "p4-u", "note": "Ultimate-Training" },
+        { "weekday": 3, "type": "optional", "sessionId": "p4-b", "note": "In Turnierwochen weglassen" },
+        { "weekday": 4, "type": "ultimate", "sessionId": null, "note": "Ultimate-Training" },
+        { "weekday": 5, "type": "rest", "sessionId": null, "note": null },
+        { "weekday": 6, "type": "rest", "sessionId": null, "note": "Turnier oder Ruhe" },
+        { "weekday": 7, "type": "rest", "sessionId": null, "note": "Turnier oder Ruhe" }
+      ],
+      "sessions": [
+        {
+          "id": "p4-a",
+          "name": "Saison A – Kraft + Sprung",
+          "focus": "Kurz und schwer, 30–45 min",
+          "exercises": [
+            { "id": "box-jump", "name": "Box Jumps", "category": "jump", "sets": 3, "repsMin": 3, "repsMax": 3, "durationSeconds": null, "perSide": false, "restSeconds": 90, "trackWeight": false, "groupId": null, "notes": null },
+            { "id": "back-squat", "name": "Kniebeuge", "category": "strength", "sets": 3, "repsMin": 3, "repsMax": 3, "durationSeconds": null, "perSide": false, "restSeconds": 180, "trackWeight": true, "groupId": null, "notes": "Schwer, aber nicht bis zum Versagen." },
+            { "id": "romanian-deadlift", "name": "Rumänisches Kreuzheben", "category": "strength", "sets": 3, "repsMin": 4, "repsMax": 4, "durationSeconds": null, "perSide": false, "restSeconds": 150, "trackWeight": true, "groupId": null, "notes": null },
+            { "id": "pull-up", "name": "Klimmzüge", "category": "strength", "sets": 3, "repsMin": 5, "repsMax": 5, "durationSeconds": null, "perSide": false, "restSeconds": 90, "trackWeight": true, "groupId": null, "notes": null },
+            { "id": "nordic-curl", "name": "Nordic Hamstring Curls", "category": "prevention", "sets": 2, "repsMin": 5, "repsMax": 5, "durationSeconds": null, "perSide": false, "restSeconds": 90, "trackWeight": false, "groupId": null, "notes": null },
+            { "id": "copenhagen-plank", "name": "Copenhagen Plank", "category": "prevention", "sets": 2, "repsMin": null, "repsMax": null, "durationSeconds": 20, "perSide": true, "restSeconds": 45, "trackWeight": false, "groupId": null, "notes": null }
+          ]
+        },
+        {
+          "id": "p4-u",
+          "name": "Luftkampf-Drills",
+          "focus": "Kurz vor oder nach dem Training",
+          "exercises": [
+            { "id": "timing-drill", "name": "Timing-Drill", "category": "skill", "sets": 1, "repsMin": 8, "repsMax": 10, "durationSeconds": null, "perSide": false, "restSeconds": 30, "trackWeight": false, "groupId": null, "notes": "Spät starten, am höchsten Punkt fangen." }
+          ]
+        },
+        {
+          "id": "p4-b",
+          "name": "Saison B – Kurz & explosiv",
+          "focus": "Optional, 30 min",
+          "exercises": [
+            { "id": "approach-jump", "name": "Anlaufsprünge mit Ziel", "category": "jump", "sets": 3, "repsMin": 3, "repsMax": 3, "durationSeconds": null, "perSide": false, "restSeconds": 90, "trackWeight": false, "groupId": null, "notes": null },
+            { "id": "trap-bar-deadlift", "name": "Trap Bar Deadlift", "category": "strength", "sets": 3, "repsMin": 3, "repsMax": 3, "durationSeconds": null, "perSide": false, "restSeconds": 150, "trackWeight": true, "groupId": null, "notes": "Explosiv hoch." },
+            { "id": "bulgarian-split-squat", "name": "Bulgarian Split Squat", "category": "strength", "sets": 2, "repsMin": 5, "repsMax": 5, "durationSeconds": null, "perSide": true, "restSeconds": 90, "trackWeight": true, "groupId": null, "notes": null },
+            { "id": "pallof-press", "name": "Pallof Press", "category": "core", "sets": 2, "repsMin": 10, "repsMax": 10, "durationSeconds": null, "perSide": true, "restSeconds": 45, "trackWeight": false, "groupId": null, "notes": null }
+          ]
+        }
+      ]
+    }
+  ]
+}
