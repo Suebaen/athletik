@@ -1,6 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { flightTimeToHeight, heightToFlightTime, heightErrorPerFrame, estimateFps, rateFps, frameAt, frameSeekTime } from '../js/jump.js';
+import {
+  flightTimeToHeight, heightToFlightTime, heightErrorPerFrame, estimateFps, rateFps,
+  fpsFrameTimes, defaultSlowFactor, jumpResult, addAttempt,
+} from '../js/jump.js';
 
 const close = (a, b, eps, msg) => assert.ok(Math.abs(a - b) <= eps, `${a} ≉ ${b} ${msg ?? ''}`);
 
@@ -49,16 +52,56 @@ test('rateFps', () => {
   assert.equal(rateFps(30), 'poor');
 });
 
-test('frame stepping lands on consecutive frames', () => {
-  for (const fps of [240, 30, 29.97]) {
-    let t = 0;
-    const seen = [];
-    for (let i = 0; i < 5; i++) {
-      t = frameSeekTime(frameAt(t, fps) + 1, fps);
-      seen.push(frameAt(t, fps));
-    }
-    assert.deepEqual(seen, [1, 2, 3, 4, 5], `fps ${fps}`);
-    assert.equal(frameAt(frameSeekTime(4, fps) - 0.5 / fps, fps), 4); // exact frame start
-  }
-  assert.equal(frameAt(-1, 240), 0);
+test('fpsFrameTimes', () => {
+  const t = fpsFrameTimes(240, 0.5);
+  assert.equal(t.length, 120);
+  close(t[1], 1 / 240, 1e-12);
+  assert.deepEqual(fpsFrameTimes(0, 1), []);
+  assert.deepEqual(fpsFrameTimes(30, NaN), []);
+});
+
+test('defaultSlowFactor', () => {
+  assert.equal(defaultSlowFactor(240), 1);
+  assert.equal(defaultSlowFactor(120), 1);
+  assert.equal(defaultSlowFactor(30), 8);
+  assert.equal(defaultSlowFactor(60), 1);
+});
+
+test('jumpResult from a 240 fps original', () => {
+  const times = fpsFrameTimes(240, 3);
+  // 0.75 s flight = 180 frames at 240 fps → 68.98 cm
+  const r = jumpResult(times, 100, 280, { fps: 240 });
+  close(r.flightSec, 0.75, 1e-9);
+  assert.equal(r.heightCm, 69);
+  assert.equal(r.frames, 180);
+  assert.equal(r.warning, null);
+  close(r.errorCm, 0.77, 0.01);
+});
+
+test('jumpResult from a Photos Slo-Mo (30 fps video, 8× slower)', () => {
+  const times = fpsFrameTimes(30, 40);
+  // Same 0.75 s jump: 180 frames, 6 s of video time.
+  const r = jumpResult(times, 300, 480, { fps: 30, slowFactor: 8 });
+  close(r.flightSec, 0.75, 1e-9);
+  assert.equal(r.heightCm, 69);
+  close(r.errorCm, 0.77, 0.01); // effectively 240 fps
+  // Forgetting the factor makes it absurd → warning.
+  assert.equal(jumpResult(times, 300, 480, { fps: 30, slowFactor: 1 }).warning, 'long');
+});
+
+test('jumpResult edge cases', () => {
+  const times = fpsFrameTimes(240, 1);
+  assert.equal(jumpResult(times, null, 10, { fps: 240 }), null);
+  assert.equal(jumpResult(times, 10, 999, { fps: 240 }), null);
+  assert.deepEqual(jumpResult(times, 50, 50, { fps: 240 }), { error: 'order' });
+  assert.deepEqual(jumpResult(times, 60, 50, { fps: 240 }), { error: 'order' });
+  assert.equal(jumpResult(times, 0, 24, { fps: 240 }).warning, 'short'); // 0.1 s
+  assert.equal(jumpResult(times, 0, 24, { fps: 240 }).frames, 24);
+});
+
+test('addAttempt fills empty slots, then replaces the lowest if better', () => {
+  assert.deepEqual(addAttempt(undefined, 60, 3), { attempts: [60, null, null], index: 0, replaced: null });
+  assert.deepEqual(addAttempt([58, null, 61], 60, 3), { attempts: [58, 60, 61], index: 1, replaced: null });
+  assert.deepEqual(addAttempt([58, 62, 61], 60, 3), { attempts: [60, 62, 61], index: 0, replaced: 58 });
+  assert.deepEqual(addAttempt([58, 62, 61], 57, 3), { attempts: [58, 62, 61], index: null, replaced: null });
 });

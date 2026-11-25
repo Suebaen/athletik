@@ -68,7 +68,7 @@ const routes = [
   { re: /^\/tests(?:\/(\d{4}-\d{2}-\d{2}))?$/, tab: 'tests', view: (m) => renderTests(ctx, m[1]) },
   { re: /^\/verlauf(?:\/([^/]+))?$/, tab: 'verlauf', view: (m) => renderHistory(ctx, m[1]) },
   { re: /^\/mehr$/, tab: 'mehr', view: () => renderMore(ctx) },
-  { re: /^\/messen$/, tab: 'messen', view: async () => renderMeasure() },
+  { re: /^\/messen$/, tab: 'messen', view: () => renderMeasure(ctx) },
 ];
 
 function currentPath() {

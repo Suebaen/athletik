@@ -4,7 +4,7 @@
 //
 // RELEASE: bump VERSION for every deploy, otherwise phones keep the old files.
 
-const VERSION = '2026-11-25.2';
+const VERSION = '2026-11-25.3';
 const CACHE = `athletik-${VERSION}`;
 
 const ASSETS = [

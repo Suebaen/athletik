@@ -171,21 +171,37 @@ tests/                  Unit-Tests für node --test
 package.json            Nur für node --test (keine Abhängigkeiten)
 ```
 
-## Messen: Sprunghöhe per Video (in Arbeit)
+## Messen: Sprunghöhe per Video
 
-Geplant ist die **Flugzeit-Methode**: Sprung in Zeitlupe filmen, Absprung- und Landebild markieren,
-die App rechnet **h = g · t² / 8**. Mit 240 fps liegt die Genauigkeit bei etwa ± 1 cm, mit normalen 30 fps nur bei ± 6 cm.
+**Flugzeit-Methode:** Sprung in Zeitlupe filmen, Absprung und Landung markieren, die App rechnet
+**h = g · t² / 8** (z. B. 0,75 s Flugzeit → 69 cm). Mit 240 fps liegt die Genauigkeit bei etwa **± 1 cm**.
 
-**Stufe 1 (aktuell):** Der Tab *Messen* lädt ein Video, liest die exakte Bildrate und die Zeit jedes Bildes
-direkt aus der Videodatei (MOV/MP4, `js/mp4.js`) und erlaubt Bild-für-Bild-Schritte.
+**Filmen**
 
 1. Einmalig *Einstellungen → Kamera → Slo-Mo aufnehmen* auf **240 fps** stellen.
-2. In der Kamera-App **Zeitlupe** wählen, ein paar Sekunden aufnehmen.
-3. In *Fotos* das Video teilen → oben **Optionen → Alle Fotodaten** einschalten → **In Dateien sichern**.
-4. In der App: *Messen → Video auswählen → Durchsuchen* → die Datei aus *Dateien* wählen.
-5. Erkannte Bildrate ablesen (Quelle „Dateiangaben (exakt)“). Mit **◀ 1 / 1 ▶** Bild für Bild springen.
+2. Handy auf den Boden, ca. 2 m entfernt, Füße gut sichtbar. Kamera-App → **Zeitlupe** → Aufnahme starten,
+   springen, stoppen. Den Sprung **ungefähr in der Mitte** der Aufnahme machen.
+3. Landen wie beim Absprung: Beine gestreckt, auf den Zehen (gebeugte Knie bei der Landung verlängern die Flugzeit).
 
-> Direkt aus der **Mediathek** gewählt, wandelt iOS Zeitlupen in ein 8× verlangsamtes 30-fps-Video um.
-> Über **Dateien** kommt das Original mit 240 fps.
+**Video wählen – zwei Wege**
 
-**Stufe 2 (folgt):** Absprung/Landung markieren, Höhe berechnen, als CMJ-Versuch unter *Tests* speichern.
+- **Einfach – Mediathek:** *Messen → Video auswählen* → Video aus der Mediathek.
+  iOS liefert dann ein 30-fps-Video, in dem die Zeitlupe 8× verlangsamt ist (7 s Aufnahme → ca. 40 s Video).
+  Die App fragt nach dem Faktor; **„Zeitlupe 8×“** lassen (bei 120-fps-Zeitlupe „4×“).
+  Wichtig: Der Sprung muss im verlangsamten Teil liegen – Anfang und Ende des Videos laufen normal schnell.
+- **Original – Dateien:** in *Fotos* teilen → **Optionen → Alle Fotodaten** → **In Dateien sichern**,
+  dann *Messen → Video auswählen → Durchsuchen*. Die App liest 240 fps direkt aus der Datei, keine Umrechnung.
+
+**Messen**
+
+1. Mit dem Schieberegler grob zum Sprung, dann mit **◀ 1 / 1 ▶** Bild für Bild.
+2. **Absprung** tippen beim **ersten Bild, in dem beide Füße in der Luft sind**.
+3. **Landung** tippen beim **ersten Bild mit Bodenkontakt**.
+4. Höhe ablesen. Unplausible Flugzeiten (unter 0,2 s oder über 0,9 s) werden markiert.
+5. **„Als … -Versuch speichern (heute)“** legt das Ergebnis als CMJ-Versuch unter *Tests* ab
+   (freier Versuch; sind alle 3 belegt, wird der schwächste ersetzt, falls der neue besser ist).
+
+**Kontrolle der Umrechnung (optional):** Einen Ball aus genau **1 m** Höhe fallen lassen und in Zeitlupe filmen.
+Absprung = erstes Bild nach dem Loslassen, Landung = erstes Bild am Boden: die Zeit sollte **ca. 0,45 s** sein.
+
+Die Bildrate und die genauen Zeiten jedes Bildes liest `js/mp4.js` direkt aus der MOV/MP4-Datei.

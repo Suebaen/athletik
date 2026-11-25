@@ -60,12 +60,73 @@ export function rateFps(fps) {
   return 'poor';
 }
 
-/** Index of the frame shown at `time` seconds (frames start at 0). */
-export function frameAt(time, fps) {
-  return Math.max(0, Math.floor(time * fps + 1e-6));
+/**
+ * Frame start times for a constant-rate video, used when the exact times
+ * can't be read from the file.
+ */
+export function fpsFrameTimes(fps, durationSec) {
+  if (!(fps > 0) || !(durationSec > 0)) return [];
+  const count = Math.max(1, Math.round(durationSec * fps));
+  return Array.from({ length: count }, (_, k) => k / fps);
 }
 
-/** Seek target for a frame: its middle, so decoder rounding can't hit a neighbour. */
-export function frameSeekTime(frame, fps) {
-  return (Math.max(0, frame) + 0.5) / fps;
+/** Slow-motion factors for videos picked from the photo library. */
+export const SLOW_FACTORS = [
+  { factor: 8, label: 'Zeitlupe 8×', hint: '240 fps' },
+  { factor: 4, label: 'Zeitlupe 4×', hint: '120 fps' },
+  { factor: 1, label: 'Normal', hint: 'keine Zeitlupe' },
+];
+
+/**
+ * Default slow-motion factor for a video. Real-time originals (≥ 100 fps)
+ * need none; a 30 fps video is most likely a Slo-Mo rendered by Photos.
+ */
+export function defaultSlowFactor(fps) {
+  if (fps >= 100) return 1;
+  return fps <= 31 ? 8 : 1;
+}
+
+export const MIN_FLIGHT_S = 0.2; // ≈ 5 cm
+export const MAX_FLIGHT_S = 0.9; // ≈ 99 cm
+
+/**
+ * Jump from two marked frames. takeoff = first frame in the air,
+ * landing = first frame touching the ground again. Times are video times;
+ * slowFactor converts them to real time (8 for a Photos Slo-Mo at 240 fps).
+ * Returns null if a mark is missing, or { error } / { flightSec, heightCm,
+ * errorCm, frames, warning }.
+ */
+export function jumpResult(frameTimes, takeoff, landing, { fps, slowFactor = 1 } = {}) {
+  if (takeoff == null || landing == null) return null;
+  if (!frameTimes[takeoff] && frameTimes[takeoff] !== 0) return null;
+  if (!frameTimes[landing] && frameTimes[landing] !== 0) return null;
+  if (landing <= takeoff) return { error: 'order' };
+
+  const flightSec = (frameTimes[landing] - frameTimes[takeoff]) / slowFactor;
+  const heightCm = Math.round(flightTimeToHeight(flightSec) * 10) / 10;
+  const errorCm = heightErrorPerFrame(fps * slowFactor, heightCm);
+  let warning = null;
+  if (flightSec < MIN_FLIGHT_S) warning = 'short';
+  else if (flightSec > MAX_FLIGHT_S) warning = 'long';
+  return { flightSec, heightCm, errorCm, frames: landing - takeoff, warning };
+}
+
+/**
+ * Puts a new value into a test's attempts (fixed length n): the first empty
+ * slot, otherwise it replaces the lowest attempt if the new value is higher.
+ * Returns { attempts, index, replaced } – index null if nothing changed.
+ */
+export function addAttempt(attempts, value, n) {
+  const a = Array.from({ length: n }, (_, i) => attempts?.[i] ?? null);
+  const free = a.indexOf(null);
+  if (free >= 0) {
+    a[free] = value;
+    return { attempts: a, index: free, replaced: null };
+  }
+  let min = 0;
+  for (let i = 1; i < n; i++) if (a[i] < a[min]) min = i;
+  if (value <= a[min]) return { attempts: a, index: null, replaced: null };
+  const replaced = a[min];
+  a[min] = value;
+  return { attempts: a, index: min, replaced };
 }

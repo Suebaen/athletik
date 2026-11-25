@@ -669,14 +669,44 @@ body.timer-open { overflow: hidden; }
   object-fit: contain;
 }
 .measure-video[hidden] { display: none; }
-.measure-fps { font-size: 3rem; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; }
-.measure-result.good { border-color: var(--done); }
-.measure-result.good .measure-fps { color: var(--done); }
-.measure-result.ok .measure-fps { color: var(--warn); }
-.measure-result.poor,
-.measure-result.error { border-color: var(--danger); }
-.measure-result.poor .measure-fps { color: var(--danger); }
-.measure-verdict { font-weight: 600; }
+details.card > summary { font-weight: 700; cursor: pointer; min-height: 32px; }
+.measure > .btn.block { margin: 0 0 12px; }
+.source-line strong { font-size: 1.4rem; font-variant-numeric: tabular-nums; }
+.chip-hint { font-weight: 400; opacity: 0.75; }
+.measure-scrub { display: grid; grid-template-columns: var(--tap) 1fr; gap: 10px; align-items: center; margin-bottom: 10px; }
+.measure-scrub .btn { margin: 0; padding: 0; }
+.measure-slider { width: 100%; height: var(--tap); accent-color: var(--accent); }
+.measure-mark-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+.measure-mark-buttons .btn {
+  flex-direction: column;
+  min-height: 64px;
+  margin: 0;
+  line-height: 1.2;
+}
+.measure-mark-buttons .btn span { font-size: 0.75rem; font-weight: 500; opacity: 0.85; }
+.mark-takeoff { background: var(--cat-jump); color: #fff; }
+.mark-landing { background: var(--done); color: #fff; }
+.measure-marks { display: flex; gap: 8px; margin-top: 10px; }
+.mark-chip {
+  flex: 1;
+  min-height: 40px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-2);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.mark-chip.takeoff { border-color: var(--cat-jump); }
+.mark-chip.landing { border-color: var(--done); }
+.mark-chip.empty { color: var(--muted); }
+.measure-height { font-size: 3rem; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; color: var(--accent); }
+.measure-sub { font-variant-numeric: tabular-nums; }
 .measure-pos { margin: 8px 0; font-size: 1.2rem; font-weight: 700; text-align: center; font-variant-numeric: tabular-nums; }
 .measure-buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 .measure-buttons .btn { margin-top: 0; padding: 0 6px; }
