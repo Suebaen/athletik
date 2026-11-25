@@ -4,7 +4,7 @@
 //
 // RELEASE: bump VERSION for every deploy, otherwise phones keep the old files.
 
-const VERSION = '2026-11-25.1';
+const VERSION = '2026-11-25.2';
 const CACHE = `athletik-${VERSION}`;
 
 const ASSETS = [
@@ -21,6 +21,7 @@ const ASSETS = [
   'js/db.js',
   'js/jump.js',
   'js/logs.js',
+  'js/mp4.js',
   'js/plan.js',
   'js/stats.js',
   'js/svgchart.js',

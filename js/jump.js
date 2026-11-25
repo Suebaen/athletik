@@ -44,9 +44,13 @@ export function estimateFps(mediaTimes, minSamples = 5) {
   deltas.sort((a, b) => a - b);
   const frame = deltas[Math.floor((deltas.length - 1) * 0.25)];
   const rawFps = 1 / frame;
-  // Snap to a common camera rate when within 4 %.
+  return { fps: snapFps(rawFps), rawFps, samples: deltas.length };
+}
+
+/** Snaps to a common camera rate when within 4 % (29.97 → 30), else rounds. */
+export function snapFps(rawFps) {
   const snap = COMMON_RATES.find((r) => Math.abs(rawFps - r) / r <= 0.04);
-  return { fps: snap ?? Math.round(rawFps), rawFps, samples: deltas.length };
+  return snap ?? Math.round(rawFps);
 }
 
 /** Rating of a frame rate for jump measurement: 'good' | 'ok' | 'poor'. */

@@ -176,12 +176,16 @@ package.json            Nur für node --test (keine Abhängigkeiten)
 Geplant ist die **Flugzeit-Methode**: Sprung in Zeitlupe filmen, Absprung- und Landebild markieren,
 die App rechnet **h = g · t² / 8**. Mit 240 fps liegt die Genauigkeit bei etwa ± 1 cm, mit normalen 30 fps nur bei ± 6 cm.
 
-**Stufe 1 (aktuell):** Der Tab *Messen* lädt ein Video und zeigt die tatsächlich erkannte Bildrate.
-So lässt sich prüfen, ob iOS Zeitlupen-Videos beim Auswählen in voller Bildrate übergibt.
+**Stufe 1 (aktuell):** Der Tab *Messen* lädt ein Video, liest die exakte Bildrate und die Zeit jedes Bildes
+direkt aus der Videodatei (MOV/MP4, `js/mp4.js`) und erlaubt Bild-für-Bild-Schritte.
 
 1. Einmalig *Einstellungen → Kamera → Slo-Mo aufnehmen* auf **240 fps** stellen.
 2. In der Kamera-App **Zeitlupe** wählen, ein paar Sekunden aufnehmen.
-3. In der App: *Messen → Video auswählen* → Video aus der Mediathek.
-4. Erkannte Bildrate ablesen. Mit **◀ 1 / 1 ▶** testen, ob das Video genau ein Bild weiterspringt.
+3. In *Fotos* das Video teilen → oben **Optionen → Alle Fotodaten** einschalten → **In Dateien sichern**.
+4. In der App: *Messen → Video auswählen → Durchsuchen* → die Datei aus *Dateien* wählen.
+5. Erkannte Bildrate ablesen (Quelle „Dateiangaben (exakt)“). Mit **◀ 1 / 1 ▶** Bild für Bild springen.
+
+> Direkt aus der **Mediathek** gewählt, wandelt iOS Zeitlupen in ein 8× verlangsamtes 30-fps-Video um.
+> Über **Dateien** kommt das Original mit 240 fps.
 
 **Stufe 2 (folgt):** Absprung/Landung markieren, Höhe berechnen, als CMJ-Versuch unter *Tests* speichern.

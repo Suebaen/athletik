@@ -1,10 +1,15 @@
-// "Messen" – step 1: load a (slow-motion) video, detect the frame rate the
-// browser actually gets, and try single-frame stepping. The full flight-time
-// measurement builds on this once real iPhone videos are known to work.
+// "Messen" – step 1: load a (slow-motion) video, read its exact frame rate
+// and frame times from the file, and try single-frame stepping. The full
+// flight-time measurement builds on this.
+//
+// The frame rate comes from the MP4/MOV container (js/mp4.js). Counting
+// frames during playback is only a fallback: iPhones can't present 240 fps
+// HEVC fast enough, so playback counting reports far too low rates.
 
 import { el, toast } from '../ui.js';
 import { formatDecimal } from '../util.js';
 import { estimateFps, heightErrorPerFrame, rateFps, frameAt, frameSeekTime } from '../jump.js';
+import { readVideoTiming, frameIndexAt, seekTimeForFrame } from '../mp4.js';
 
 const SAMPLE_MAX = 60;       // frames to sample
 const SAMPLE_MS = 8000;      // give up after this much wall time
@@ -37,8 +42,10 @@ export function renderMeasure() {
       el('ol', { class: 'steps' },
         el('li', {}, 'Einmalig: ', el('em', { text: 'Einstellungen → Kamera → Slo-Mo aufnehmen' }), ' auf ', el('strong', { text: '240 fps' }), ' stellen.'),
         el('li', { text: 'In der Kamera-App „Zeitlupe“ wählen und ein paar Sekunden aufnehmen (z. B. einen Sprung).' }),
-        el('li', { text: 'Hier auf „Video auswählen“ tippen und das Video aus der Mediathek wählen.' }),
+        el('li', {}, 'In ', el('em', { text: 'Fotos' }), ' das Video teilen → ', el('em', { text: 'Optionen → Alle Fotodaten' }), ' einschalten → ', el('em', { text: 'In Dateien sichern' }), '.'),
+        el('li', {}, 'Hier auf „Video auswählen“ tippen → ', el('em', { text: 'Durchsuchen' }), ' → die Datei aus ', el('em', { text: 'Dateien' }), ' wählen.'),
         el('li', { text: 'Die erkannte Bildrate notieren – oder einen Screenshot machen.' })),
+      el('p', { class: 'muted small', text: 'Direkt aus der Mediathek gewählt, wandelt iOS Zeitlupen in ein verlangsamtes 30-fps-Video um. Über „Dateien“ kommt das Original mit 240 fps.' }),
       el('button', { type: 'button', class: 'btn block', text: 'Video auswählen', onclick: () => fileInput.click() }),
       fileInput),
     video,
@@ -61,18 +68,33 @@ async function loadVideo(file, ui) {
 
   video.src = objectUrl;
   video.load();
-  try {
-    await once(video, 'loadedmetadata', 15000);
-  } catch {
+  // Exact timing from the file (independent of whether this browser can
+  // decode the video); playback counting only as a fallback.
+  const [timing, playable] = await Promise.all([
+    readVideoTiming(file).catch((err) => { console.warn('Could not read video container', err); return null; }),
+    once(video, 'loadedmetadata', 15000).then(() => true, () => false),
+  ]);
+  if (!timing && !playable) {
     showStatus(result, 'Das Video konnte nicht geladen werden. Ist es ein MOV/MP4-Video?', 'error');
     return;
   }
 
-  showStatus(result, 'Bildrate wird gemessen … (dauert ein paar Sekunden)');
-  const fps = await measureFps(video);
+  let fps = null;
+  if (timing) {
+    fps = { fps: timing.fps, rawFps: timing.rawFps, samples: timing.frameCount, source: 'file' };
+  } else {
+    showStatus(result, 'Bildrate wird gemessen … (dauert ein paar Sekunden)');
+    const measured = await measureFps(video);
+    fps = measured && { ...measured, source: 'playback' };
+  }
   showFps(result, fps);
-  stepper.setFps(fps?.fps ?? null);
-  stepper.root.hidden = false;
+  if (!playable) {
+    video.hidden = true;
+    result.append(el('p', { class: 'measure-verdict', text: 'Dieses Video kann der Browser nicht abspielen – Bild-für-Bild geht damit nicht.' }));
+  } else {
+    stepper.setTiming(timing?.frameTimes ?? null, fps?.fps ?? null);
+    stepper.root.hidden = false;
+  }
 
   details.replaceChildren(
     detail('Datei', file.name || '–'),
@@ -80,8 +102,10 @@ async function loadVideo(file, ui) {
     detail('Größe', `${formatDecimal(Math.round(file.size / 1e5) / 10)} MB`),
     detail('Auflösung', video.videoWidth ? `${video.videoWidth} × ${video.videoHeight}` : '–'),
     detail('Dauer', Number.isFinite(video.duration) ? `${formatDecimal(Math.round(video.duration * 100) / 100)} s` : '–'),
-    detail('Gemessene Bildwechsel', fps ? String(fps.samples) : '–'),
-    detail('Bildrate (roh)', fps ? `${formatDecimal(Math.round(fps.rawFps * 10) / 10)} fps` : '–'),
+    detail('Quelle', fps?.source === 'file' ? 'Dateiangaben (exakt)' : fps ? 'Wiedergabe gezählt (ungenau)' : '–'),
+    detail(fps?.source === 'file' ? 'Bilder im Video' : 'Gezählte Bildwechsel', fps ? String(fps.samples) : '–'),
+    detail('Bildrate (roh)', fps ? `${formatDecimal(Math.round(fps.rawFps * 100) / 100)} fps` : '–'),
+    timing && !timing.constantRate && detail('Hinweis', 'Bildrate im Video nicht konstant'),
     detail('Browser', navigator.userAgent.match(/(iPhone OS [\d_]+|Mac OS X [\d_]+|Version\/[\d.]+|Chrome\/[\d.]+)/g)?.join(' · ') ?? '–'));
   details.closest('section').hidden = false;
 }
@@ -135,7 +159,7 @@ function showFps(box, fps) {
   const verdict = {
     good: 'Sehr gut – damit lässt sich die Sprunghöhe auf etwa 1 cm genau messen.',
     ok: 'Brauchbar, aber 240 fps wären genauer.',
-    poor: 'Zu ungenau für Sprungmessung. Falls du in Zeitlupe gefilmt hast, hat iOS das Video beim Auswählen vermutlich umgewandelt.',
+    poor: 'Zu ungenau für Sprungmessung. Falls du in Zeitlupe gefilmt hast, hat iOS das Video beim Auswählen vermutlich umgewandelt – über „Dateien“ auswählen (siehe oben).',
   }[rating];
 
   box.hidden = false;
@@ -156,21 +180,27 @@ function detail(label, value) {
 
 function stepControls(video) {
   let fps = null;
+  let frameTimes = null; // exact times from the file, when available
   const pos = el('div', { class: 'measure-pos', text: '–' });
+  const currentFrame = () => (frameTimes ? frameIndexAt(frameTimes, video.currentTime) : frameAt(video.currentTime, fps));
   const update = () => {
-    const t = video.currentTime;
-    pos.textContent = fps
-      ? `Bild ${frameAt(t, fps)} · ${formatDecimal(Math.round(t * 1000) / 1000)} s`
-      : `${formatDecimal(Math.round(t * 1000) / 1000)} s`;
+    const time = `${formatDecimal(Math.round(video.currentTime * 1000) / 1000)} s`;
+    if (!fps && !frameTimes) { pos.textContent = time; return; }
+    const total = frameTimes ? ` von ${frameTimes.length}` : '';
+    pos.textContent = `Bild ${currentFrame() + 1}${total} · ${time}`;
   };
   video.addEventListener('seeked', update);
   video.addEventListener('timeupdate', update);
 
   const step = (frames) => {
-    if (!fps) { toast('Bildrate unbekannt'); return; }
+    if (!fps && !frameTimes) { toast('Bildrate unbekannt'); return; }
     video.pause();
+    if (frameTimes) {
+      video.currentTime = seekTimeForFrame(frameTimes, currentFrame() + frames);
+      return;
+    }
     const max = Math.max(0, Math.ceil((video.duration || 0) * fps) - 1);
-    const frame = Math.min(Math.max(frameAt(video.currentTime, fps) + frames, 0), max);
+    const frame = Math.min(Math.max(currentFrame() + frames, 0), max);
     video.currentTime = frameSeekTime(frame, fps);
   };
 
@@ -184,7 +214,7 @@ function stepControls(video) {
       el('button', { type: 'button', class: 'btn secondary', text: '1 ▶', onclick: () => step(1) }),
       el('button', { type: 'button', class: 'btn secondary', text: '10 ▶▶', onclick: () => step(10) })));
 
-  return { root, setFps: (v) => { fps = v; update(); } };
+  return { root, setTiming: (times, rate) => { frameTimes = times?.length ? times : null; fps = rate; update(); } };
 }
 
 function once(target, event, timeoutMs) {
