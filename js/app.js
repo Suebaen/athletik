@@ -9,6 +9,7 @@ import { renderPlan } from './views/planview.js';
 import { renderTests } from './views/tests.js';
 import { renderHistory } from './views/history.js';
 import { renderMore } from './views/more.js';
+import { renderMeasure } from './views/measure.js';
 import { initTimer } from './timer.js';
 
 const main = document.getElementById('view');
@@ -67,7 +68,7 @@ const routes = [
   { re: /^\/tests(?:\/(\d{4}-\d{2}-\d{2}))?$/, tab: 'tests', view: (m) => renderTests(ctx, m[1]) },
   { re: /^\/verlauf(?:\/([^/]+))?$/, tab: 'verlauf', view: (m) => renderHistory(ctx, m[1]) },
   { re: /^\/mehr$/, tab: 'mehr', view: () => renderMore(ctx) },
-  // Future: { re: /^\/messen$/, tab: 'messen', view: … } for camera-based jump measurement.
+  { re: /^\/messen$/, tab: 'messen', view: async () => renderMeasure() },
 ];
 
 function currentPath() {

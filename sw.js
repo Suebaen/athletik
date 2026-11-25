@@ -4,7 +4,7 @@
 //
 // RELEASE: bump VERSION for every deploy, otherwise phones keep the old files.
 
-const VERSION = '2026-11-24.1';
+const VERSION = '2026-11-25.1';
 const CACHE = `athletik-${VERSION}`;
 
 const ASSETS = [
@@ -19,6 +19,7 @@ const ASSETS = [
   'icons/apple-touch-icon.png',
   'js/app.js',
   'js/db.js',
+  'js/jump.js',
   'js/logs.js',
   'js/plan.js',
   'js/stats.js',
@@ -30,6 +31,7 @@ const ASSETS = [
   'js/validate.js',
   'js/views/day.js',
   'js/views/history.js',
+  'js/views/measure.js',
   'js/views/more.js',
   'js/views/planview.js',
   'js/views/tests.js',

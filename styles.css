@@ -64,6 +64,9 @@
 
 * { box-sizing: border-box; }
 
+/* Author `display` rules (e.g. .card) must not override the hidden attribute. */
+[hidden] { display: none !important; }
+
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -650,3 +653,31 @@ body.timer-open { overflow: hidden; }
 .notice.error ul { margin: 6px 0 0; padding-left: 1.2em; font-size: 0.9rem; }
 .btn-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .btn-row .btn { flex: 1; }
+
+/* Messen ----------------------------------------------------------------- */
+
+.tabbar a { font-size: 0.68rem; }
+.steps { margin: 8px 0 4px; padding-left: 1.3em; }
+.steps li { margin: 6px 0; }
+.measure-video {
+  display: block;
+  width: 100%;
+  max-height: 55vh;
+  margin-bottom: 12px;
+  border-radius: var(--radius);
+  background: #000;
+  object-fit: contain;
+}
+.measure-video[hidden] { display: none; }
+.measure-fps { font-size: 3rem; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.measure-result.good { border-color: var(--done); }
+.measure-result.good .measure-fps { color: var(--done); }
+.measure-result.ok .measure-fps { color: var(--warn); }
+.measure-result.poor,
+.measure-result.error { border-color: var(--danger); }
+.measure-result.poor .measure-fps { color: var(--danger); }
+.measure-verdict { font-weight: 600; }
+.measure-pos { margin: 8px 0; font-size: 1.2rem; font-weight: 700; text-align: center; font-variant-numeric: tabular-nums; }
+.measure-buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.measure-buttons .btn { margin-top: 0; padding: 0 6px; }
+.measure-details li { word-break: break-word; }

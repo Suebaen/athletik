@@ -10,6 +10,7 @@ Läuft komplett auf dem iPhone, ohne Server, ohne Login. Alle Daten bleiben auf 
 - **Pausentimer:** startet nach jedem abgehakten Satz und läuft auch korrekt weiter, wenn die App im Hintergrund war. Der Bildschirm bleibt während der Pause an.
 - **Plan:** Phasen → Wochen → Tage. Vergangene Tage lassen sich nachtragen.
 - **Tests:** CMJ, Anlauf-Reichhöhe und Standweitsprung (bester von 3 Versuchen), mit Verlaufsdiagramm und 75-cm-Ziellinie.
+- **Messen (Testversion):** prüft, mit welcher Bildrate die App deine Zeitlupen-Videos bekommt – Vorbereitung für die Sprunghöhenmessung per Video.
 - **Verlauf:** bester Satz pro Einheit für jede Übung.
 - **Mehr:** Sicherung exportieren und importieren, neuen Trainingsplan importieren.
 
@@ -163,17 +164,24 @@ js/stats.js             Auswertungen (bester Satz, Testreihen)
 js/svgchart.js          Selbst gezeichnete SVG-Diagramme
 js/timerstate.js        Reine Timer-Berechnung (Zeitstempel)
 js/timer.js             Timer-Oberfläche, Wake Lock, Ton
+js/jump.js              Reine Sprung-Mathematik: Flugzeit → Höhe, Bildrate, Bildschritte
 js/db.js, js/logs.js    IndexedDB-Speicher
-js/views/…              Bildschirme (Heute/Tag, Plan, Tests, Verlauf, Mehr)
+js/views/…              Bildschirme (Heute/Tag, Plan, Tests, Messen, Verlauf, Mehr)
 tests/                  Unit-Tests für node --test
 package.json            Nur für node --test (keine Abhängigkeiten)
 ```
 
-**Später einen Tab „Messen“ ergänzen** (Sprungmessung per Kamera):
+## Messen: Sprunghöhe per Video (in Arbeit)
 
-1. `js/views/measure.js` anlegen.
-2. In `js/app.js` eine Route `#/messen` eintragen (die Stelle ist im Code markiert).
-3. In `index.html` einen sechsten Link in der Tab-Leiste ergänzen.
-4. Die neue Datei in `ASSETS` in `sw.js` aufnehmen.
+Geplant ist die **Flugzeit-Methode**: Sprung in Zeitlupe filmen, Absprung- und Landebild markieren,
+die App rechnet **h = g · t² / 8**. Mit 240 fps liegt die Genauigkeit bei etwa ± 1 cm, mit normalen 30 fps nur bei ± 6 cm.
 
-Testergebnisse könnten dann direkt im Speicher `tests` (Schlüssel `Datum|testId`) landen.
+**Stufe 1 (aktuell):** Der Tab *Messen* lädt ein Video und zeigt die tatsächlich erkannte Bildrate.
+So lässt sich prüfen, ob iOS Zeitlupen-Videos beim Auswählen in voller Bildrate übergibt.
+
+1. Einmalig *Einstellungen → Kamera → Slo-Mo aufnehmen* auf **240 fps** stellen.
+2. In der Kamera-App **Zeitlupe** wählen, ein paar Sekunden aufnehmen.
+3. In der App: *Messen → Video auswählen* → Video aus der Mediathek.
+4. Erkannte Bildrate ablesen. Mit **◀ 1 / 1 ▶** testen, ob das Video genau ein Bild weiterspringt.
+
+**Stufe 2 (folgt):** Absprung/Landung markieren, Höhe berechnen, als CMJ-Versuch unter *Tests* speichern.
